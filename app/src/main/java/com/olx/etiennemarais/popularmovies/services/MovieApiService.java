@@ -12,7 +12,7 @@ import retrofit.http.GET;
 import rx.Observable;
 
 public class MovieApiService {
-    private static final String FORUM_SERVER_URL = "http://jsonplaceholder.typicode.com";
+    private static final String MOVIE_DB_API_URL = "http://api.themoviedb.org/3/";
     private MoviesApi mMoviesApi;
 
     public MovieApiService() {
@@ -25,7 +25,7 @@ public class MovieApiService {
         };
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-            .setEndpoint(FORUM_SERVER_URL)
+            .setEndpoint(MOVIE_DB_API_URL)
             .setConverter(Util.getGsonConverter())
             .setRequestInterceptor(requestInterceptor)
             .setLogLevel(RestAdapter.LogLevel.FULL)
@@ -34,13 +34,12 @@ public class MovieApiService {
         mMoviesApi = restAdapter.create(MoviesApi.class);
     }
 
-    public MoviesApi getmMoviesApi() {
+    public MoviesApi getMoviesApi() {
         return mMoviesApi;
     }
 
     public interface MoviesApi {
-        @GET("/posts")
-        public Observable<List<Movie>>
-            getPosts();
+        @GET("/discover/movie")
+        public Observable<List<Movie>> getMovies();
     }
 }
