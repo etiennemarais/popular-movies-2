@@ -7,15 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
-
 import com.olx.etiennemarais.popularmovies.R;
 import com.olx.etiennemarais.popularmovies.adapters.MoviesListAdapter;
 import com.olx.etiennemarais.popularmovies.models.Movie;
+import com.olx.etiennemarais.popularmovies.models.MovieResults;
 import com.olx.etiennemarais.popularmovies.presenters.ListPresenter;
 import com.olx.etiennemarais.popularmovies.services.MovieApiService;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.InjectView;
 
@@ -52,9 +50,9 @@ public class ListFragment extends Fragment {
         return rootView;
     }
 
-    public void displayMovies(List<Movie> movies) {
+    public void displayMovies(MovieResults movieResults) {
         mMoviesListAdapter.clear();
-        mMoviesListAdapter.addAll(movies);
+        mMoviesListAdapter.addAll(movieResults.results);
         mMoviesListAdapter.notifyDataSetInvalidated();
     }
 }

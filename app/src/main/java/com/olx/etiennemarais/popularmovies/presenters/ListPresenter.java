@@ -2,12 +2,9 @@ package com.olx.etiennemarais.popularmovies.presenters;
 
 import android.util.Log;
 
-import com.olx.etiennemarais.popularmovies.models.Movie;
+import com.olx.etiennemarais.popularmovies.models.MovieResults;
 import com.olx.etiennemarais.popularmovies.services.MovieApiService;
 import com.olx.etiennemarais.popularmovies.views.list.ListFragment;
-
-import java.util.List;
-
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -23,25 +20,23 @@ public class ListPresenter {
     }
 
     public void loadMovies() {
-        Log.i(LOG_TAG, ": Some movies are getting loaded starting");
         mMovieApiService.getMoviesApi()
             .getMovies()
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Observer<List<Movie>>() {
+            .subscribe(new Observer<MovieResults>() {
                 @Override
-                public void onNext(List<Movie> movies) {
-                    Log.i(LOG_TAG, ": Some movies are getting loaded onNext()");
-                    mListFragment.displayMovies(movies);
+                public void onNext(MovieResults movieResults) {
+                    mListFragment.displayMovies(movieResults);
                 }
 
                 @Override
                 public void onCompleted() {
-                    Log.i(LOG_TAG, ": Some movies are getting loaded onCompleted()");
                 }
 
                 @Override
                 public void onError(Throwable e) {
+                    Log.i(LOG_TAG, ": ONERROR: " + e.toString());
                 }
             });
     }

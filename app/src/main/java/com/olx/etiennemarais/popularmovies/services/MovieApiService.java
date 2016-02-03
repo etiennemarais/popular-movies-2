@@ -1,11 +1,7 @@
 package com.olx.etiennemarais.popularmovies.services;
 
 import com.olx.etiennemarais.popularmovies.BuildConfig;
-import com.olx.etiennemarais.popularmovies.models.Movie;
-import com.olx.etiennemarais.popularmovies.utils.Util;
-
-import java.util.List;
-
+import com.olx.etiennemarais.popularmovies.models.MovieResults;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.http.GET;
@@ -26,7 +22,6 @@ public class MovieApiService {
 
         RestAdapter restAdapter = new RestAdapter.Builder()
             .setEndpoint(MOVIE_DB_API_URL)
-            .setConverter(Util.getGsonConverter())
             .setRequestInterceptor(requestInterceptor)
             .setLogLevel(RestAdapter.LogLevel.FULL)
             .build();
@@ -40,6 +35,6 @@ public class MovieApiService {
 
     public interface MoviesApi {
         @GET("/discover/movie")
-        public Observable<List<Movie>> getMovies();
+        Observable<MovieResults> getMovies();
     }
 }
